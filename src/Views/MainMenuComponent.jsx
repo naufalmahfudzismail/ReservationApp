@@ -1,87 +1,98 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import MainAppBar from '../Elements/MenuApp'
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import CameraIcon from "@material-ui/icons/PhotoCamera";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
+import MainAppBar from "../Elements/MenuApp";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
   icon: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2
   },
   heroUnit: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   heroContent: {
     maxWidth: 600,
-    margin: '0 auto',
-    padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
+    margin: "0 auto",
+    padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`
   },
   heroButtons: {
-    marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 4
   },
   layout: {
-    width: 'auto',
+    width: "auto",
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
       width: 1100,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
   },
   cardGrid: {
-    padding: `${theme.spacing.unit * 8}px 0`,
+    padding: `${theme.spacing.unit * 8}px 0`
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column"
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%" // 16:9
   },
   cardContent: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing.unit * 6,
+    padding: theme.spacing.unit * 6
   },
 
-  submit :{
-    justifyContent: 'center'
-  },
+  submit: {
+    justifyContent: "center"
+  }
 });
 
 function Album(props) {
   const { classes } = props;
-
+  console.log(props.ruangan);
   return (
     <React.Fragment>
       <CssBaseline />
-        <MainAppBar></MainAppBar>
+      <MainAppBar />
       <main>
         {/* Hero unit */}
         <div className={classes.heroUnit}>
           <div className={classes.heroContent}>
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-            </Typography>
-            <Typography variant="h6" align="center" color="textSecondary" paragraph>
-               Website Peminjaman Ruangan di jurusan TIK
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="textPrimary"
+              gutterBottom
+            />
+            <Typography
+              variant="h6"
+              align="center"
+              color="textSecondary"
+              paragraph
+            >
+              Website Peminjaman Ruangan di jurusan TIK
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={16} justify="center">
@@ -112,16 +123,16 @@ function Album(props) {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                     {item.kd_ruang}
+                      {item.kd_ruang}
                     </Typography>
-                    <Typography>
-                    {item.nm_ruang}
-                    </Typography>
+                    <Typography>{item.nm_ruang}</Typography>
                   </CardContent>
-                  <CardActions className = {classes.submit}>
-                    <Button  color="primary" variant="contained" >
-                     Lihat Jadwal 
-                    </Button>
+                  <CardActions className={classes.submit}>
+                    <Link to={"/detail/" + item.kd_ruang}>
+                      <Button color="primary" variant="contained">
+                        Lihat Jadwal
+                      </Button>
+                    </Link>
                   </CardActions>
                 </Card>
               </Grid>
@@ -134,7 +145,12 @@ function Album(props) {
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="textSecondary"
+          component="p"
+        >
           Something here to give the footer a purpose!
         </Typography>
       </footer>
@@ -144,7 +160,7 @@ function Album(props) {
 }
 
 Album.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Album);

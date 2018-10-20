@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import MainMenu from './Pages/MainMenu';
 import Login from './Pages/Login';
-import Main from './Pages/MainMenu';
 import Detail from './Pages/Detail';
+
 import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory } from "history";
-
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route} from 'react-router-dom';
 
 ReactDOM.render(
     <BrowserRouter>
-        <Detail />
+        <div>
+            <Route exact path="/" component={MainMenu} />
+            <Route path="/login" component={Login} />
+            <Route path="/detail/:ruangan" component={Detail} />
+        </div>
     </BrowserRouter>
     , document.getElementById('root')
 );

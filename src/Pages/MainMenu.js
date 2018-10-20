@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import Main from './main';
-import MainComponent from '../Views/mainmenu.jsx'
+import MainComponent from '../Views/MainMenuComponent.jsx'
 
 class MainMenu extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           ruangan: []
         };

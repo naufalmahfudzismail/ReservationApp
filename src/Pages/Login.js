@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Main from './main';
 import LoginComponent from '../Views/LoginComponent.jsx';
 import MainMenu from './MainMenu'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
