@@ -8,7 +8,6 @@ class MainMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          ruang :"",
           senin :[],
           selasa :[],
           rabu :[],
@@ -21,7 +20,7 @@ class MainMenu extends Component {
 
         //this.props.match.params = menarik nilai variabel path dari page sebelumnya
       
-        fetch("http://localhost:4001/api/getJadwalRuangan/"+this.props.match.params.ruangan+"/senin" )
+        fetch("http://localhost:4001/api/getJadwalHari/senin")
         .then(response => response.json())
         .then(json => {
           this.setState({
@@ -29,7 +28,7 @@ class MainMenu extends Component {
           });
         });
         
-        fetch("http://localhost:4001/api/getJadwalRuangan/"+ this.props.match.params.ruangan+"/selasa" )
+        fetch("http://localhost:4001/api/getJadwalHari/selasa" )
         .then(response => response.json())
         .then(json => {
           this.setState({
@@ -37,7 +36,7 @@ class MainMenu extends Component {
           });
         });
         
-        fetch("http://localhost:4001/api/getJadwalRuangan/"+this.props.match.params.ruangan+"/rabu" )
+        fetch("http://localhost:4001/api/getJadwalHari/rabu" )
         .then(response => response.json())
         .then(json => {
           this.setState({
@@ -45,7 +44,7 @@ class MainMenu extends Component {
           });
         });
            
-        fetch("http://localhost:4001/api/getJadwalRuangan/"+ this.props.match.params.ruangan+"/kamis" )
+        fetch("http://localhost:4001/api/getJadwalhari/kamis" )
         .then(response => response.json())
         .then(json => {
           this.setState({
@@ -54,7 +53,7 @@ class MainMenu extends Component {
         });
 
         
-        fetch("http://localhost:4001/api/getJadwalRuangan/"+ this.props.match.params.ruangan+"/jumat" )
+        fetch("http://localhost:4001/api/getJadwalHari/jumat" )
         .then(response => response.json())
         .then(json => {
           this.setState({
@@ -70,7 +69,7 @@ class MainMenu extends Component {
         <div className="App">
             <MenuApp></MenuApp>
             <MainComponent
-            kd_ruang = {this.props.match.params.ruangan}
+            kd_ruang = "Semester Ganjil 2018 - 2019"
             senin = {this.state.senin}
             selasa = {this.state.selasa}
             rabu ={this.state.rabu}

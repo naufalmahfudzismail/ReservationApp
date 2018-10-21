@@ -102,9 +102,11 @@ function Album(props) {
                   </Button>
                 </Grid>
                 <Grid item>
+                <Link to = {'/jadwal'}>
                   <Button variant="outlined" color="primary">
                     Lihat Jadwal Semester ini
                   </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </div>
@@ -128,7 +130,7 @@ function Album(props) {
                     <Typography>{item.nm_ruang}</Typography>
                   </CardContent>
                   <CardActions className={classes.submit}>
-                    <Link to={"/detail/" + item.kd_ruang}>
+                    <Link to={'/detail/' +item.kd_ruang}>
                       <Button color="primary" variant="contained">
                         Lihat Jadwal
                       </Button>
