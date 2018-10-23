@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import MainComponent from '../Views/MainMenuComponent.jsx'
+import FindDialogComponent from '../Views/FindEmptyRoomDialog'
 
 class MainMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          ruangan: []
+          ruangan: [],
+          open : ''
         };
       }
 
@@ -22,10 +24,24 @@ class MainMenu extends Component {
           });
       }
 
+      handleClickOpen = () => {
+        this.setState({ open: true });
+      };
+    
+      handleClose = () => {
+        this.setState({ open: false });
+      };
+
     render() {
         return (
         <div className="App">
-            <MainComponent ruangan = {this.state.ruangan} ></MainComponent>
+            <MainComponent 
+            ruangan = {this.state.ruangan}
+            cariClick = {this.handleClickOpen}
+            button_name = "Lihat Jadwal" ></MainComponent>
+            <FindDialogComponent
+              open = {this.state.open}
+              handleClose = {this.handleClose}></FindDialogComponent>
         </div>
         );
     }

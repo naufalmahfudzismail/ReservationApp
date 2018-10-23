@@ -97,12 +97,12 @@ function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={16} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" onClick = {props.cariClick}>
                     Cari Ruangan Kosong
                   </Button>
                 </Grid>
                 <Grid item>
-                <Link to = {'/jadwal'}>
+                <Link to = {'/jadwal'} style={{ textDecoration: 'none' }}>
                   <Button variant="outlined" color="primary">
                     Lihat Jadwal Semester ini
                   </Button>
@@ -130,7 +130,7 @@ function Album(props) {
                     <Typography>{item.nm_ruang}</Typography>
                   </CardContent>
                   <CardActions className={classes.submit}>
-                    <Link to={'/detail/' +item.kd_ruang}>
+                    <Link to={'/detail/' +item.kd_ruang} style={{ textDecoration: 'none' }}>
                       <Button color="primary" variant="contained">
                         Lihat Jadwal
                       </Button>

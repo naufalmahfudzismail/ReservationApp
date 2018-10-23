@@ -12,7 +12,7 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MainMenu from '../Pages/MainMenu';
+import MainMenu from "../Pages/MainMenu";
 
 const styles = theme => ({
   layout: {
@@ -74,10 +74,19 @@ function SignIn(props) {
                 autoComplete="current-password"
               />
             </FormControl>
-            <FormControlLabel control={<Checkbox value="remember" color="primary" />}label="Remember me" />
-                <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-                  Sign In
-                </Button>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
           </form>
         </Paper>
       </main>
@@ -85,11 +94,6 @@ function SignIn(props) {
   );
 }
 
-const MainMenuRoute = () =>(
-  <div>
-    <MainMenu></MainMenu>
-  </div>
-); 
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired
