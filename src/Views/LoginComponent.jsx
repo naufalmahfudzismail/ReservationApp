@@ -12,7 +12,7 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MainMenu from "../Pages/MainMenu";
+import Redirect from 'react-router-dom/Redirect';
 
 const styles = theme => ({
   layout: {
@@ -47,56 +47,138 @@ const styles = theme => ({
   }
 });
 
-function SignIn(props) {
-  const { classes } = props;
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false;
+    setTimeout(cb, 100);
+  }
+};
+
+class LoginComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nim: "",
+      password: "",
+      nama: "",
+      kelas: "",
+      authenticated : false
+    };
+    this.handleClicklogin.bind(this);
+    this.handleChange.bind(this);
+  }
+
+  handleClicklogin = () =>{
+    fetch(
+      "http://localhost:4001/api/logMahasiswa/" +
+        this.state.nim +
+        "/" +
+        this.state.password
+    )
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          nim: json.response.kd_role
+        });
+      });
+
+    if (this.state.nim.length == 0) {
+      alert("NIM atau Password salah!");
+    } else {
+      fetch("http://localhost:4001/api/getMahasiswa/" + this.state.nim)
+        .then(response => response.json())
+        .then(json => {
+          this.setState({
+            nama: json.response.nm_mhs,
+            kelas: json.response.kd_kelas,
+          });
+        });
+
+        fakeAuth.authenticate(() => {
+          this.setState({ authenticated: true });
+        });
+    }
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  handleClickDosen = () => {};
+
+
+  render() {
+
+    if (this.state.authenticated) {
+      return <Redirect to={'/MainMenu'} />;
+    }
+
+    console.log(this.state.nim)
+    console.log(this.state.authenticated)
+
+    const { classes } = this.props;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form className={classes.form}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel>Email Address</InputLabel>
+                <Input 
+                id="email" 
+                name="nim" 
+                type ="text"
+                onChange = {this.handleChange("nim")}
+                autoFocus required
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel >Password</InputLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange ={this.handleChange("password")}
+                />
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
               />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </React.Fragment>
-  );
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick = {this.handleClicklogin}
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      </React.Fragment>
+    );
+  }
 }
 
-
-SignIn.propTypes = {
+LoginComponent.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(LoginComponent);

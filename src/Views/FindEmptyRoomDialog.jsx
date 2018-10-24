@@ -58,7 +58,7 @@ class FormDialog extends React.Component {
                 <TextField
                   name="date"
                   label="Pada Tanggal"
-                  type="date"
+                  type="date" required
                   onChange={this.handleChange('date')}
                   defaultValue={Date.now()}
                   variant="outlined"
@@ -70,7 +70,7 @@ class FormDialog extends React.Component {
                 <TextField
                   name="start_time"
                   label="Pada Waktu mulai"
-                  type="time"
+                  type="time" required
                   onChange={this.handleChange('start_time')}
                   defaultValue="00:00"
                   variant="outlined"
@@ -85,7 +85,7 @@ class FormDialog extends React.Component {
                 <TextField
                   name="end_time"
                   label="Pada Waktu Akhir"
-                  type="time"
+                  type="time" required
                   onChange={this.handleChange('end_time')}
                   defaultValue="00:00"
                   variant="outlined"
@@ -101,11 +101,11 @@ class FormDialog extends React.Component {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.handleClose} color="primary">
-              Cancel
+            <Button name= "button cancel" onClick={this.props.handleClose}  color="primary">  
+              Cancel 
             </Button>
             <Link to={'/result/'+this.state.date+'/'+this.state.start_time+'/'+this.state.end_time} style={{ textDecoration: 'none' }}>
-            <Button color="primary" variant="contained">
+            <Button name = "Button Submit" color="primary" variant="contained">
               Submit
             </Button>
             </Link>

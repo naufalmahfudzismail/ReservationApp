@@ -13,7 +13,6 @@ import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import MainAppBar from "../Elements/MenuApp";
 import { Link } from "react-router-dom";
 
 const styles = theme => ({
@@ -74,7 +73,6 @@ function Album(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <MainAppBar />
       <main>
         {/* Hero unit */}
         <div className={classes.heroUnit}>

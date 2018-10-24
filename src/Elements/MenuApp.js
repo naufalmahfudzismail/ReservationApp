@@ -27,10 +27,17 @@ const styles = {
 };
 
 class MenuAppBar extends React.Component {
-  state = {
-    auth: true,
-    anchorEl: null,
-  };
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      auth: true,
+      anchorEl: null,
+    };
+
+  }
+
 
   handleChange = event => {
     this.setState({ auth: event.target.checked });
@@ -61,6 +68,9 @@ class MenuAppBar extends React.Component {
             </Typography>
             {auth && (
               <div>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              {this.props.name}
+            </Typography>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : null}
                   aria-haspopup="true"

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import MainComponent from '../Views/MainMenuComponent.jsx'
 import FindDialogComponent from '../Views/FindEmptyRoomDialog'
+import MainAppBar from '../Elements/MenuApp'
 
 class MainMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+          nim :'',
           ruangan: [],
           open : ''
         };
@@ -35,6 +37,7 @@ class MainMenu extends Component {
     render() {
         return (
         <div className="App">
+         <MainAppBar />
             <MainComponent 
             ruangan = {this.state.ruangan}
             cariClick = {this.handleClickOpen}

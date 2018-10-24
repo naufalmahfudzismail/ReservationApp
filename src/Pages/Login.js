@@ -4,10 +4,17 @@ import LoginComponent from '../Views/LoginComponent.jsx';
 
 class Login extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+
+    }
+  }
+
   render() {
     return (
       <div className="App">
-       <LoginComponent  link = {this.routeLink}></LoginComponent>
+       <LoginComponent ></LoginComponent>
       </div>
     );
   }

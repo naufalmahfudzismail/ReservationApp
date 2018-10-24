@@ -13,8 +13,8 @@ import { BrowserRouter, Route} from 'react-router-dom';
 ReactDOM.render(
     <BrowserRouter>
         <div>
-            <Route exact path="/" component={MainMenu} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/" component={Login} />
+            <Route path="/Mainmenu" component={MainMenu} />
             <Route path="/detail/:ruangan" component={Detail} />
             <Route path = "/jadwal" component = {Jadwal}  />
             <Route path = "/result/:date/:start_time/:end_time" component ={Hasil}/>
