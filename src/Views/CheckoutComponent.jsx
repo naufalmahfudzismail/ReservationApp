@@ -57,8 +57,7 @@ class FormDialog extends React.Component {
         headers: {
           "Access-Control-Allow-Credentials" : "true",
           "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
+        },credentials: 'same-origin',
         body: JSON.stringify({
           nim: this.state.nim,
           nm_jadwal: this.state.nm_jadwal,

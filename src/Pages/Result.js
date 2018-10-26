@@ -15,7 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import MainAppBar from "../Elements/MenuApp";
 import { Link } from "react-router-dom";
-import CheckoutComponent from '../Views/CheckoutComponent'
+import CheckoutComponent from '../Views/CheckoutComponent';
+import ProgressBar from '../Elements/ProgresBar'
 
 const styles = theme => ({
     appBar: {
@@ -76,8 +77,10 @@ class Result extends React.Component{
         this.state ={
             nim : '',
             ruangan :[],
+            ruangantoRemove : [],
             namaRuangan : '',
-            open : false
+            open : false,
+            loading : true
         }
 
         this.handleClickOpen.bind(this);
@@ -89,10 +92,19 @@ class Result extends React.Component{
           .then(response => response.json())
           .then(json => {
             this.setState({
-              ruangan: json.response
+              ruangantoRemove: json.response,
             });
           });
-    }
+
+          fetch("http://localhost:4001/api/allRuangan")
+          .then(response => response.json())
+          .then(json => {
+            this.setState({
+                ruangan : json.response,
+                loading : false
+              });
+          });
+    };
 
     handleClickOpen = (roomName) => {
       this.setState({ 
@@ -110,9 +122,23 @@ class Result extends React.Component{
     
 
 
-    render(){
-    const {classes} = this.props
+  render(){
+  const {classes} = this.props
+  console.log(this.state.ruangan)
+  console.log(this.state.ruangantoRemove)
 
+  this.state.ruangan= this.state.ruangan.filter( ( el ) => !this.state.ruangantoRemove.includes( el ) );
+  
+  console.log(this.state.ruangan)
+  console.log(this.state.ruangan.lenght)
+    if(this.state.loading) {
+      return(
+      <div className = "App">
+          < ProgressBar></ProgressBar>
+       </div>
+      )
+    }
+    else{
     if(this.state.ruangan.lenght != 0){
                   return( <div className = "App">
                           <MainAppBar />
@@ -169,7 +195,7 @@ class Result extends React.Component{
                          
                           <footer className={classes.footer}>
                               <Typography variant="h6" align="center" gutterBottom>
-                              Footer
+                             Here we are !
                               </Typography>
                               <Typography
                               variant="subtitle1"
@@ -177,7 +203,7 @@ class Result extends React.Component{
                               color="textSecondary"
                               component="p"
                               >
-                              Something here to give the footer a purpose!
+                              Simple App by @tib.ingincumlaude
                               </Typography>
                           </footer>
                           }
@@ -228,7 +254,7 @@ class Result extends React.Component{
               
                   <footer className={classes.footer}>
                       <Typography variant="h6" align="center" gutterBottom>
-                      Footer
+                      Hello Again !
                       </Typography>
                       <Typography
                       variant="subtitle1"
@@ -236,7 +262,7 @@ class Result extends React.Component{
                       color="textSecondary"
                       component="p"
                       >
-                      Something here to give the footer a purpose!
+                      Simple App by @tib.ingincumlaude
                       </Typography>
                   </footer>
                   }
@@ -254,6 +280,7 @@ class Result extends React.Component{
             </div>)
 
           }
+        }
     }
 }
 

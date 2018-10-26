@@ -16,10 +16,12 @@
     "react": "^16.5.2",
     "react-chartist": "^0.13.1",
     "react-dom": "^16.5.2",
+    "react-fetch-progressbar": "0.0.3",
     "react-google-maps": "^9.4.5",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
-    "react-swipeable-views": "^0.12.17"
+    "react-swipeable-views": "^0.12.17",
+    "react-topbar-progress-indicator": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

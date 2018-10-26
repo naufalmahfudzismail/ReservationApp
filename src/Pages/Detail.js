@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import MainComponent from '../Views/DetailComponent.jsx';
 import MenuApp from '../Elements/MenuApp'; 
+import ProgressBar  from '../Elements/ProgresBar'
 
 class MainMenu extends Component {
 
@@ -13,7 +14,8 @@ class MainMenu extends Component {
           selasa :[],
           rabu :[],
           kamis :[],
-          jumat: []
+          jumat: [],
+          loading : true
         };
       }
 
@@ -58,13 +60,25 @@ class MainMenu extends Component {
         .then(response => response.json())
         .then(json => {
           this.setState({
-            jumat: json.response
+            jumat: json.response,
+            loading : false
           });
         });
         
       }
 
     render() {
+
+      if(this.state.loading){
+        return(
+          <div className="App">
+        <MenuApp></MenuApp>
+        <ProgressBar></ProgressBar>
+        </div>
+        )
+      }
+      else
+      {
         //console.log(this.props.params.ruangan);
         return (
         <div className="App">
@@ -80,6 +94,7 @@ class MainMenu extends Component {
         </div>
         );
     }
+  }
 }
 
 export default MainMenu;

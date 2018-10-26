@@ -3,6 +3,8 @@ import './App.css';
 import MainComponent from '../Views/MainMenuComponent.jsx'
 import FindDialogComponent from '../Views/FindEmptyRoomDialog'
 import MainAppBar from '../Elements/MenuApp'
+import ProgressBar from '../Elements/ProgresBar'
+import Typography from "@material-ui/core/Typography";
 
 class MainMenu extends Component {
 
@@ -11,7 +13,9 @@ class MainMenu extends Component {
         this.state = {
           nim :'',
           ruangan: [],
-          open : ''
+          open : '',
+          loading : true,
+          error : false
         };
       }
 
@@ -21,9 +25,18 @@ class MainMenu extends Component {
           .then(response => response.json())
           .then(json => {
             this.setState({
-              ruangan: json.response
+              ruangan: json.response,
+              loading : false
             });
           });
+      };
+
+      componentDidCatch(){
+
+        this.setState({
+          error : true
+        })
+
       }
 
       handleClickOpen = () => {
@@ -35,6 +48,29 @@ class MainMenu extends Component {
       };
 
     render() {
+
+      if(this.error)
+      {
+        return (
+          <div>
+            <Typography component="h1"
+                    variant="h2" align = 'center'>
+              404, Terdapat Error pada server
+              </Typography>
+          </div>
+        )
+      }
+      else{
+
+      if( this.state.loading ){
+        return (
+          <div className = "App">
+          <MainAppBar />
+          < ProgressBar></ProgressBar>
+          </div>
+        )
+      }
+      else{
         return (
         <div className="App">
          <MainAppBar />
@@ -47,7 +83,9 @@ class MainMenu extends Component {
               handleClose = {this.handleClose}></FindDialogComponent>
         </div>
         );
+      }
     }
+  }
 }
 
 export default MainMenu;

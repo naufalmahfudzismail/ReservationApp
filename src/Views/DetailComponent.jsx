@@ -105,8 +105,8 @@ class Tablayout extends React.Component {
         <div className={classes.heroUnit}>
           <div className={classes.heroContent}>
             <Typography
-              component="h1"
-              variant="h2"
+              component="h2"
+              variant="h3"
               align="center"
               color="textPrimary"
               gutterBottom

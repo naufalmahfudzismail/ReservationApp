@@ -14,6 +14,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 const styles = {
+
+  appBar: {
+    position: 'relative',
+  },
   root: {
     flexGrow: 1,
   },
@@ -58,7 +62,7 @@ class MenuAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" color = "default" className = {classes.appBar}>
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
