@@ -9,11 +9,10 @@ import Hasil from './Pages/Result';
 import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory } from "history";
 import { BrowserRouter, Route} from 'react-router-dom';
-
 ReactDOM.render(
     <BrowserRouter>
         <div>
-            <Route exact path="/" component={Login} />
+            <Route exact path="/login" component={Login} />
             <Route path="/Mainmenu" component={MainMenu} />
             <Route path="/detail/:ruangan" component={Detail} />
             <Route path = "/jadwal" component = {Jadwal}  />

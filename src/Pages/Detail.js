@@ -3,6 +3,7 @@ import './App.css';
 import MainComponent from '../Views/DetailComponent.jsx';
 import MenuApp from '../Elements/MenuApp'; 
 import ProgressBar  from '../Elements/ProgresBar'
+import CheckoutComponent from '../Elements/CheckoutComponent'
 
 class MainMenu extends Component {
 
@@ -15,7 +16,12 @@ class MainMenu extends Component {
           rabu :[],
           kamis :[],
           jumat: [],
-          loading : true
+          open : false,
+          loading : true,
+          anchorEl: null,
+          openDialog : false,
+          openDrawer : false,
+          auth : true
         };
       }
 
@@ -67,13 +73,62 @@ class MainMenu extends Component {
         
       }
 
+      handleClickOpen = () => {
+        this.setState({ 
+            open: true,
+           });
+        };
+    
+      handleClose = () => {
+        this.setState({ 
+          open: false, 
+        });
+      };
+
+       // App barr Handle
+      
+       handleChange = event => {
+        this.setState({ auth: event.target.checked });
+      };
+    
+      handleProfil = event => {
+        this.setState({ anchorEl: event.currentTarget });
+      };
+    
+      handleCloseProfil = () => {
+        this.setState({ anchorEl: null });
+      };
+    
+      handleDrawerOpen = () => {
+        this.setState({ openDrawer: true });
+      };
+    
+      handleDrawerClose = () => {
+        this.setState({ openDrawer: false });
+      };
+
     render() {
+
+      const openProf = Boolean(this.state.anchorEl);
+      console.log("Detail =" +this.props.location.state.Mahasiswa)
+      
 
       if(this.state.loading){
         return(
           <div className="App">
-        <MenuApp></MenuApp>
-        <ProgressBar></ProgressBar>
+            <MenuApp
+              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              open = {this.state.openDrawer}
+              handleCloseProfil = {this.handleCloseProfil}
+              handleMenu = {this.handleProfil}
+              handleDrawerOpen = {this.handleDrawerOpen}
+              handleDrawerClose = {this.handleDrawerClose}
+              auth = {this.state.auth}
+              anchorEl = {this.state.anchorEl}
+              openProf = {openProf}
+              handleChange = {this.handleChange}
+            ></MenuApp>
+            <ProgressBar openDrawer = {this.state.openDrawer}></ProgressBar>
         </div>
         )
       }
@@ -82,15 +137,38 @@ class MainMenu extends Component {
         //console.log(this.props.params.ruangan);
         return (
         <div className="App">
-            <MenuApp></MenuApp>
+            <MenuApp
+              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              open = {this.state.openDrawer}
+              handleCloseProfil = {this.handleCloseProfil}
+              handleMenu = {this.handleProfil}
+              handleDrawerOpen = {this.handleDrawerOpen}
+              handleDrawerClose = {this.handleDrawerClose}
+              auth = {this.state.auth}
+              anchorEl = {this.state.anchorEl}
+              openProf = {openProf}
+              handleChange = {this.handleChange}     
+            ></MenuApp>
             <MainComponent
-            kd_ruang = {this.props.match.params.ruangan}
-            senin = {this.state.senin}
-            selasa = {this.state.selasa}
-            rabu ={this.state.rabu}
-            kamis ={this.state.kamis}
-            jumat ={this.state.jumat}
+             pesanClick = {this.handleClickOpen}
+             Mahasiswa  = {this.props.location.state.Mahasiswa}
+              openDrawer = {this.state.openDrawer}
+              kd_ruang = {this.props.match.params.ruangan}
+              senin = {this.state.senin}
+              selasa = {this.state.selasa}
+              rabu ={this.state.rabu}
+              kamis ={this.state.kamis}
+              jumat ={this.state.jumat}
             ></MainComponent>
+            <CheckoutComponent
+              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              handleClose = {this.handleClose}
+              open = {this.state.open}
+              disableInput = {false}
+              kd_ruang = {this.props.match.params.ruangan}
+             
+            >
+            </CheckoutComponent>
         </div>
         );
     }

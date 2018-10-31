@@ -12,7 +12,9 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Redirect from 'react-router-dom/Redirect';
+import Redirect from "react-router-dom/Redirect";
+import { withAlert } from "react-alert";
+import autoBind from 'react-autobind'
 
 const styles = theme => ({
   layout: {
@@ -47,62 +49,52 @@ const styles = theme => ({
   }
 });
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
-
 class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
+    autoBind(this)
     this.state = {
       nim: "",
       password: "",
       nama: "",
       kelas: "",
-      authenticated : false
+      authenticated: false,
+      result: "",
+      loading : false
     };
     this.handleClicklogin.bind(this);
     this.handleChange.bind(this);
   }
 
-  handleClicklogin = () =>{
-    fetch(
-      "http://localhost:4001/api/logMahasiswa/" +
-        this.state.nim +
-        "/" +
-        this.state.password
-    )
+  handleClicklogin(){
+    fetch("http://localhost:4001/api/logMahasiswa", {
+      method: "POST",
+      body: JSON.stringify({
+        kode: this.state.nim,
+        password: this.state.password
+      }),
+      headers: { "Content-type": "application/json" }
+    })
       .then(response => response.json())
       .then(json => {
         this.setState({
-          nim: json.response.kd_role
+          result: json.success,
+          loading : true
         });
       });
 
-    if (this.state.nim.length == 0) {
-      alert("NIM atau Password salah!");
-    } else {
-      fetch("http://localhost:4001/api/getMahasiswa/" + this.state.nim)
-        .then(response => response.json())
-        .then(json => {
-          this.setState({
-            nama: json.response.nm_mhs,
-            kelas: json.response.kd_kelas,
-          });
-        });
-
-        fakeAuth.authenticate(() => {
-          this.setState({ authenticated: true });
-        });
-    }
+      if(this.state.result === "login sucessfull" && this.state.loading){
+        this.props.alert.success(this.state.result);
+        this.setState({
+          authenticated : true
+        })
+      }
+      else if (this.state.loading){
+        this.props.alert.error(this.state.result);
+        this.setState({
+          authenticated : false
+        })
+      }   
   };
 
   handleChange = name => event => {
@@ -113,18 +105,12 @@ class LoginComponent extends React.Component {
 
   handleClickDosen = () => {};
 
-
   render() {
-
     if (this.state.authenticated) {
-      return <Redirect to={'/MainMenu'} />;
+      return <Redirect to={{pathname:"/mainmenu", state : {kode : this.state.nim}}} />;
     }
-
-    console.log(this.state.nim)
-    console.log(this.state.authenticated)
-
     const { classes } = this.props;
-    return (
+    return ( 
       <React.Fragment>
         <CssBaseline />
         <main className={classes.layout}>
@@ -137,23 +123,24 @@ class LoginComponent extends React.Component {
             </Typography>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel>Email Address</InputLabel>
-                <Input 
-                id="email" 
-                name="nim" 
-                type ="text"
-                onChange = {this.handleChange("nim")}
-                autoFocus required
+                <InputLabel>Nomor Induk</InputLabel>
+                <Input
+                  id="email"
+                  name="nim"
+                  type="text"
+                  onChange={this.handleChange("nim")}
+                  autoFocus
+                  required
                 />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel >Password</InputLabel>
+                <InputLabel>Password</InputLabel>
                 <Input
                   name="password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  onChange ={this.handleChange("password")}
+                  onChange={this.handleChange("password")}
                 />
               </FormControl>
               <FormControlLabel
@@ -164,7 +151,7 @@ class LoginComponent extends React.Component {
                 fullWidth
                 variant="contained"
                 color="primary"
-                onClick = {this.handleClicklogin}
+                onClick={this.handleClicklogin}
                 className={classes.submit}
               >
                 Sign In
@@ -181,4 +168,4 @@ LoginComponent.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(LoginComponent);
+export default withAlert(withStyles(styles)(LoginComponent));

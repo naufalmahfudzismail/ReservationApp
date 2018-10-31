@@ -7,15 +7,19 @@ import ProgressBar from '../Elements/ProgresBar'
 import Typography from "@material-ui/core/Typography";
 
 class MainMenu extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
+          Mahasiswa : {},
           nim :'',
           ruangan: [],
-          open : '',
+          open : false,
           loading : true,
-          error : false
+          error : false,
+          anchorEl: null,
+          openDialog : false,
+          openDrawer : false,
+          auth : true,
         };
       }
 
@@ -26,6 +30,15 @@ class MainMenu extends Component {
           .then(json => {
             this.setState({
               ruangan: json.response,
+              nim : this.props.location.state.kode,
+            });
+          });
+
+          fetch("http://localhost:4001/api/getMahasiswa/"+ this.props.location.state.kode)
+          .then(response => response.json())
+          .then(json => {
+            this.setState({
+              Mahasiswa : json.response,
               loading : false
             });
           });
@@ -39,15 +52,43 @@ class MainMenu extends Component {
 
       }
 
-      handleClickOpen = () => {
+      handleClickOpenDialog = () => {
         this.setState({ open: true });
       };
     
-      handleClose = () => {
+      handleCloseDialog = () => {
         this.setState({ open: false });
       };
 
+      // App barr Handle
+
+      handleChange = event => {
+        this.setState({ auth: event.target.checked });
+      };
+    
+      handleProfil = event => {
+        this.setState({ anchorEl: event.currentTarget });
+      };
+    
+      handleCloseProfil = () => {
+        this.setState({ anchorEl: null });
+      };
+    
+      handleDrawerOpen = () => {
+        this.setState({ openDrawer: true });
+      };
+    
+      handleDrawerClose = () => {
+        this.setState({ openDrawer: false });
+      };
+
+      
+
     render() {
+
+      
+      console.log(this.state.Mahasiswa)
+      const openProf = Boolean(this.state.anchorEl);
 
       if(this.error)
       {
@@ -65,22 +106,35 @@ class MainMenu extends Component {
       if( this.state.loading ){
         return (
           <div className = "App">
-          <MainAppBar />
-          < ProgressBar></ProgressBar>
+          < ProgressBar openDrawer = {this.state.openDrawer}></ProgressBar>
           </div>
         )
       }
       else{
         return (
         <div className="App">
-         <MainAppBar />
-            <MainComponent 
-            ruangan = {this.state.ruangan}
-            cariClick = {this.handleClickOpen}
-            button_name = "Lihat Jadwal" ></MainComponent>
+          <MainAppBar 
+                Mahasiswa = {this.state.Mahasiswa}
+                open = {this.state.openDrawer}
+                handleCloseProfil = {this.handleCloseProfil}
+                handleMenu = {this.handleProfil}
+                handleDrawerOpen = {this.handleDrawerOpen}
+                handleDrawerClose = {this.handleDrawerClose}
+                auth = {this.state.auth}
+                anchorEl = {this.state.anchorEl}
+                handleChange = {this.handleChange}
+                openProf = {openProf}>
+          </MainAppBar>
+          <MainComponent 
+                Mahasiswa = {this.state.Mahasiswa}
+                openDrawer = {this.state.openDrawer}
+                ruangan = {this.state.ruangan}
+                cariClick = {this.handleClickOpenDialog}
+                button_name = "Lihat Jadwal" ></MainComponent>
             <FindDialogComponent
+              Mahasiswa =  {this.state.Mahasiswa}
               open = {this.state.open}
-              handleClose = {this.handleClose}></FindDialogComponent>
+              handleClose = {this.handleCloseDialog}></FindDialogComponent>
         </div>
         );
       }

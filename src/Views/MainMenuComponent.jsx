@@ -61,6 +61,22 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit * 6
   },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: 240,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
 
   submit: {
     justifyContent: "center"
@@ -84,7 +100,9 @@ function Album(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        <main>
+        <main  className={classNames(classes.content, {
+            [classes.contentShift]: !props.openDrawer,
+          })}>
           {/* Hero unit */}
           <div className={classes.heroUnit}>
             <div className={classes.heroContent}>
@@ -93,14 +111,12 @@ function Album(props) {
                 variant="h2"
                 align="center"
                 color="textPrimary"
-                gutterBottom
-              />
+                gutterBottom />
               <Typography
                 variant="h6"
                 align="center"
                 color="textSecondary"
-                paragraph
-              >
+                paragraph >
                 Website Peminjaman Ruangan di jurusan TIK
               </Typography>
               <div className={classes.heroButtons}>
@@ -109,13 +125,12 @@ function Album(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={props.cariClick}
-                    >
+                      onClick={props.cariClick} >
                       Cari Ruangan Kosong
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Link to={"/jadwal"} style={{ textDecoration: "none" }}>
+                    <Link to={{pathname :"/jadwal", state : {Mahasiswa : props.Mahasiswa}}} style={{ textDecoration: "none" }}>
                       <Button variant="outlined" color="primary">
                         Lihat Jadwal Semester ini
                       </Button>
@@ -144,7 +159,7 @@ function Album(props) {
                     </CardContent>
                     <CardActions className={classes.submit}>
                       <Link
-                        to={"/detail/" + item.kd_ruang}
+                        to={{pathname : "/detail/" + item.kd_ruang, state :{Mahasiswa : props.Mahasiswa}}}
                         style={{ textDecoration: "none" }}
                       >
                         <Button color="primary" variant="contained">

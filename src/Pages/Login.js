@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import LoginComponent from '../Views/LoginComponent.jsx';
+import { Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const options = {
+  transition: "fade",
+  timeout: 2000,
+  position: "bottom center"
+};
 
 class Login extends Component {
 
@@ -14,7 +22,9 @@ class Login extends Component {
   render() {
     return (
       <div className="App">
-       <LoginComponent ></LoginComponent>
+      <Provider template={AlertTemplate} {...options}>
+          <LoginComponent />
+      </Provider>
       </div>
     );
   }

@@ -17,6 +17,7 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import CheckoutComponent from '../Elements/CheckoutComponent'
 
 function TabContainer(props) {
   const { children, dir } = props;
@@ -63,7 +64,23 @@ const styles = theme => ({
   },
   heroButtons: {
     marginTop: theme.spacing.unit * 4
-  }
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: 240,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
 });
 
 class Tablayout extends React.Component {
@@ -101,6 +118,9 @@ class Tablayout extends React.Component {
   render() {
     const { classes, theme } = this.props;
     return (
+      <main className={classNames(classes.content, {
+        [classes.contentShift]: !this.props.openDrawer,
+      })}>
       <div className={classes.root}>
         <div className={classes.heroUnit}>
           <div className={classes.heroContent}>
@@ -123,8 +143,8 @@ class Tablayout extends React.Component {
             <div className={classes.heroButtons}>
               <Grid container spacing={16} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Pinjam Ruangan
+                  <Button variant="contained" color="primary" onClick = {this.props.pesanClick}>
+                    Pinjam Ruangan 
                   </Button>
                 </Grid>
                 <Grid item>
@@ -324,6 +344,7 @@ class Tablayout extends React.Component {
           </TabContainer>
         </SwipeableViews>
       </div>
+      </main>
     );
   }
 }
