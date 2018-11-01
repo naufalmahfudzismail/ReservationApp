@@ -166,7 +166,6 @@ class MainMenu extends Component {
               open = {this.state.open}
               disableInput = {false}
               kd_ruang = {this.props.match.params.ruangan}
-             
             >
             </CheckoutComponent>
         </div>

@@ -104,7 +104,7 @@ class Tablayout extends React.Component {
     this.setState({ value: index });
   };
 
-  getDosen(kode){
+  getDosen = (kode) => {
     fetch("http://localhost:4001/api/getNamaDosen/"+kode+"")
       .then(response => response.json())
       .then(json => {

@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Redirect from "react-router-dom/Redirect";
 import { withAlert } from "react-alert";
-import autoBind from 'react-autobind'
+import autoBind from "react-autobind";
 
 const styles = theme => ({
   layout: {
@@ -52,7 +52,7 @@ const styles = theme => ({
 class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
-    autoBind(this)
+    autoBind(this);
     this.state = {
       nim: "",
       password: "",
@@ -60,42 +60,48 @@ class LoginComponent extends React.Component {
       kelas: "",
       authenticated: false,
       result: "",
-      loading : false
+      loading: false
     };
     this.handleClicklogin.bind(this);
     this.handleChange.bind(this);
   }
 
-  handleClicklogin(){
-    fetch("http://localhost:4001/api/logMahasiswa", {
+  handleClicklogin  = async () => {
+    const settings = {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         kode: this.state.nim,
         password: this.state.password
-      }),
-      headers: { "Content-type": "application/json" }
-    })
-      .then(response => response.json())
-      .then(json => {
-        this.setState({
-          result: json.success,
-          loading : true
-        });
+      })
+    };
+    const responses = await fetch("http://localhost:4001/api/logMahasiswa", settings)
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        result: json.success,
+        loading: true
       });
+    }).catch(e => {
+      return e
+  });
 
-      if(this.state.result === "login sucessfull" && this.state.loading){
-        this.props.alert.success(this.state.result);
-        this.setState({
-          authenticated : true
-        })
-      }
-      else if (this.state.loading){
-        this.props.alert.error(this.state.result);
-        this.setState({
-          authenticated : false
-        })
-      }   
-  };
+    if (this.state.result === "login sucessfull" && this.state.loading) {
+      this.props.alert.success(this.state.result);
+      this.setState({
+        authenticated: true
+      });
+    } else if (this.state.loading) {
+      this.props.alert.error(this.state.result);
+      this.setState({
+        authenticated: false
+      });
+    }
+
+    return responses;
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -107,10 +113,14 @@ class LoginComponent extends React.Component {
 
   render() {
     if (this.state.authenticated) {
-      return <Redirect to={{pathname:"/mainmenu", state : {kode : this.state.nim}}} />;
+      return (
+        <Redirect
+          to={{ pathname: "/mainmenu", state: { kode: this.state.nim } }}
+        />
+      );
     }
     const { classes } = this.props;
-    return ( 
+    return (
       <React.Fragment>
         <CssBaseline />
         <main className={classes.layout}>

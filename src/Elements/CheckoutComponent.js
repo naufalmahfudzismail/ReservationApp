@@ -8,6 +8,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import dateformat from 'dateformat';
+import { withAlert } from "react-alert";
+import DialogAlert from './DialogAlert'
 
 const styles = theme => ({
   container: {
@@ -42,7 +45,10 @@ class FormDialog extends React.Component {
   componentDidMount(){
     this.setState({
       Mahasiswa : this.props.Mahasiswa,
-      kd_ruangan : this.props.kd_ruang
+      kd_ruang : this.props.kd_ruang,
+      date : this.props.date,
+      start_time : this.props.start_time,
+      end_time : this.props.end_time
     })
   }
 
@@ -50,37 +56,25 @@ class FormDialog extends React.Component {
     this.setState({
       [name]: event.target.value
     });
-  };
+  }; 
 
 
-  handleClickSubmit = () => {
-    const [month, day, year] = this.state.date.split("/");
-    this.state.date = `${year}-${month}-${day}`;
-
-    var hari = this.state.date.day();
-
-    if( hari == 1){hari = "senin"}
-    else if(hari == 2){hari = "selasa"}
-    else if (hari == 3){hari = "rabu"}
-    else if (hari == 4){hari =  "kamis"}
-    else if (hari == 5){hari = "jumat"}
-    else if (hari == 6){hari = "sabtu"}
-    else if (hari == 7){hari = "minggu"}
-
+  handleClickSubmit = async() => {
+    var responses;
     if (this.state.nm_jadwal.length === 0 || this.state.tujuan.length === 0) {
-      alert("Semua data harus di isi");
+     alert("Semua data harus di isi");
     } else {
-      fetch("http://localhost:4001/api/addPeminjaman", {
+      responses = await fetch("http://localhost:4001/api/addPeminjaman", {
         method: "POST",
         body: JSON.stringify({
-          nim: this.state.Mahasiswa[0].nim,
+          kd_role: this.state.Mahasiswa[0].NIM,
           nm_jadwal: this.state.nm_jadwal,
           tgl: this.state.date,
           jam_pinjam: this.state.start_time,
           jam_selesai: this.state.end_time,
           tujuan: this.state.tujuan,
-          kd_ruang: this.state.kd_ruang,
-          hari: hari
+          kd_ruang: this.props.kd_ruang,
+          hari: dateformat(this.state.date, "dddd")
         }),
         headers: {
           "Content-Type": "application/json",
@@ -93,19 +87,31 @@ class FormDialog extends React.Component {
             result: json.success
           });
         });
-    }
-    alert(this.state.result);
+
+        alert("Permintaan Peminjaman ruangan berhasi dikirim");
+        this.props.handleClose();
+      }
+
+      return responses;
   };
 
   render() {
+    dateformat.i18n = {
+      dayNames: [
+          'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
+          'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+      ],
+      monthNames: [
+          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+          'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      ],
+      timeNames: [
+          'a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM'
+      ]
+  };
     console.log(this.state.Mahasiswa)
     const { classes } = this.props;
-
-    if(this.props.date == null || this.props.start_time == null || this.props.end_time == null) {
-        this.state.date = this.props.date;
-        this.state.start_time = this.props.start_time;
-        this.state.end_time = this.props.end_time;
-    }
+    console.log(dateformat(this.props.date, "dddd"));
 
     return (
       <div>
@@ -168,7 +174,7 @@ class FormDialog extends React.Component {
                 />
                 <TextField
                   name="nm_jadwal"
-                  label="tujuan pemesanan anda"
+                  label="tujuan anda"
                   type="text"
                   required
                   onChange={this.handleChange("nm_jadwal")}
@@ -218,4 +224,4 @@ FormDialog.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FormDialog);
+export default withAlert(withStyles(styles)(FormDialog));

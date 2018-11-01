@@ -15,11 +15,11 @@ class MainMenu extends Component {
           ruangan: [],
           open : false,
           loading : true,
-          error : false,
           anchorEl: null,
           openDialog : false,
           openDrawer : false,
           auth : true,
+          error: null, errorInfo: null
         };
       }
 
@@ -44,12 +44,12 @@ class MainMenu extends Component {
           });
       };
 
-      componentDidCatch(){
-
+      componentDidCatch(error, errorInfo) {
+        // Catch errors in any components below and re-render with error message
         this.setState({
-          error : true
+          error: error,
+          errorInfo: errorInfo
         })
-
       }
 
       handleClickOpenDialog = () => {
@@ -90,16 +90,18 @@ class MainMenu extends Component {
       console.log(this.state.Mahasiswa)
       const openProf = Boolean(this.state.anchorEl);
 
-      if(this.error)
-      {
+      if (this.state.errorInfo) {
+        // Error path
         return (
           <div>
-            <Typography component="h1"
-                    variant="h2" align = 'center'>
-              404, Terdapat Error pada server
-              </Typography>
+            <h2>Something went wrong.</h2>
+            <details style={{ whiteSpace: 'pre-wrap' }}>
+              {this.state.error && this.state.error.toString()}
+              <br />
+              {this.state.errorInfo.componentStack}
+            </details>
           </div>
-        )
+        );
       }
       else{
 

@@ -17,6 +17,15 @@ import MainAppBar from "../Elements/MenuApp";
 import { Link } from "react-router-dom";
 import CheckoutComponent from '../Elements/CheckoutComponent';
 import ProgressBar from '../Elements/ProgresBar'
+import dateformat from 'dateformat';
+import { Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const options = {
+  transition: 'scale',
+  zindex : 1000,
+  timeout: 2000
+};
 
 const styles = theme => ({
     appBar: {
@@ -164,6 +173,20 @@ class Result extends React.Component{
 
   render(){
 
+    dateformat.i18n = {
+      dayNames: [
+          'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
+          'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+      ],
+      monthNames: [
+          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+          'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      ],
+      timeNames: [
+          'a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM'
+      ]
+  };
+
   
   const {classes, theme} = this.props
   const openProf = Boolean(this.state.anchorEl);
@@ -220,7 +243,15 @@ class Result extends React.Component{
                   color="textPrimary"
                   gutterBottom
                   >
-                  {this.props.match.params.date}, {this.props.match.params.start_time} - {this.props.match.params.end_time}
+                  { dateformat(this.props.match.params.date, "dddd, dS mmmm yyyy")}  
+                  </Typography>
+                  <Typography
+                  variant="h6"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                  >
+                  {this.props.match.params.start_time} - {this.props.match.params.end_time}
                   </Typography>
               </div>
               </div>
@@ -267,8 +298,9 @@ class Result extends React.Component{
           </footer>
        }
   
+       <Provider template={AlertTemplate} {...options}>
         <CheckoutComponent
-          Mahasiswa  = {this.props.location.Mahasiswa}
+          Mahasiswa  = {this.props.location.state.Mahasiswa}
           handleClose = {this.handleClose}
           date = {this.props.match.params.date}
           start_time = {this.props.match.params.start_time}
@@ -276,7 +308,7 @@ class Result extends React.Component{
           nim = {this.props.match.params.nim}
           open = {this.state.open}
           disableInput = {true}
-          kd_ruang = {this.state.namaRuangan}></CheckoutComponent> </div>)
+          kd_ruang = {this.state.namaRuangan}></CheckoutComponent> </Provider> </div>)
      }
       else{
           return( <div>
@@ -324,18 +356,17 @@ class Result extends React.Component{
                 </Typography>
             </footer>
             }
-      
-      <CheckoutComponent
-      handleClose = {this.handleClose}
-      date = {this.props.match.params.date}
-      start_time = {this.props.match.params.start_time}
-      end_time = {this.props.match.params.end_time}
-      nim = {this.props.match.params.nim}
-      open = {this.state.open}
-      kd_ruang = {this.state.namaRuangan}
-      disableInput = {true}
-      
-      ></CheckoutComponent>
+            <Provider template={AlertTemplate} {...options}>
+              <CheckoutComponent
+              Mahasiswa =  {this.props.location.state.Mahasiswa}
+              handleClose = {this.handleClose}
+              date = {this.props.match.params.date}
+              start_time = {this.props.match.params.start_time}
+              end_time = {this.props.match.params.end_time}
+              nim = {this.props.match.params.nim}
+              open = {this.state.open}
+              kd_ruang = {this.state.namaRuangan}
+              disableInput = {true}></CheckoutComponent> </Provider>
       </div>)
 
           }

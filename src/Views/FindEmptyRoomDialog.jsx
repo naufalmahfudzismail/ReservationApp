@@ -43,7 +43,6 @@ class FormDialog extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const enabled = this.state.date.lenght > 0 && this.state.start_time.lenght >0 && this.state.end_time.lenght>0;
     return (
       <div>
         <Dialog
