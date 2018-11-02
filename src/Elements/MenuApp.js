@@ -20,6 +20,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -82,6 +83,7 @@ class MenuAppBar extends React.Component {
     })
   }
 
+
   render() {
     const { classes, theme, open, handleChange, handleCloseProfil, handleDrawerClose, handleMenu, handleDrawerOpen, auth, anchorEl 
     ,openProf} = this.props;
@@ -135,7 +137,12 @@ class MenuAppBar extends React.Component {
                   onClose={handleCloseProfil}
                 >
                   <MenuItem onClick={handleCloseProfil}>Profile</MenuItem>
-                  <MenuItem onClick={handleCloseProfil}>My account</MenuItem>
+                  <Link
+                        to={"/" }
+                        style={{ textDecoration: "none" }}
+                      >
+                  <MenuItem onClick={handleCloseProfil}>Log out</MenuItem>
+                  </Link>
                 </Menu>
               </div>
             )}

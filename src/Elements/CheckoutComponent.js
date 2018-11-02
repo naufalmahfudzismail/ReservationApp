@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dateformat from 'dateformat';
 import { withAlert } from "react-alert";
-import DialogAlert from './DialogAlert'
+import DialogAlert from './DialogAlert';
 
 const styles = theme => ({
   container: {
