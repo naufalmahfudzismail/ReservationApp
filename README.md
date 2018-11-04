@@ -1,6 +1,4 @@
-SISTEM PEMINJAMAN RUANGAN DI GEDUNG TIK PNJ "Reservation App"
-
-Created by "TI-B 2016"
+## **Sistem peminjaman ruangan gedung AA PNJ "Reservation App"**
 
 Front End App builded with React.js and Material UI Liblary
 
