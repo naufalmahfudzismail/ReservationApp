@@ -54,26 +54,28 @@ class LoginComponent extends React.Component {
     super(props);
     autoBind(this);
     this.state = {
-      nim: "",
+      kd_role: "",
       password: "",
       nama: "",
       kelas: "",
-      authenticated: false,
+      authenticatedMahasiswa: false,
+      authenticatedDosen : false,
       result: "",
       loading: false
     };
-    this.handleClicklogin.bind(this);
+    this.handleClickMahasiswa.bind(this);
+    this.handleClickDosen.bind(this);
     this.handleChange.bind(this);
   }
 
-  handleClicklogin  = async () => {
+  handleClickMahasiswa  = async () => {
     const settings = {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        kode: this.state.nim,
+        kode: this.state.kd_role,
         password: this.state.password
       })
     };
@@ -88,15 +90,15 @@ class LoginComponent extends React.Component {
       return e
   });
 
-    if (this.state.result === "login sucessfull" && this.state.loading) {
+    if (this.state.result === "login berhasil" && this.state.loading) {
       this.props.alert.success(this.state.result);
       this.setState({
-        authenticated: true
+        authenticatedMahasiswa: true
       });
     } else if (this.state.loading) {
       this.props.alert.error(this.state.result);
       this.setState({
-        authenticated: false
+        authenticatedMahasiswa: false
       });
     }
 
@@ -109,13 +111,56 @@ class LoginComponent extends React.Component {
     });
   };
 
-  handleClickDosen = () => {};
+  handleClickDosen = async() => {
+    const settings = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        kode: this.state.kd_role,
+        password: this.state.password
+      })
+    };
+    const responses = await fetch("http://localhost:4001/api/logDosen", settings)
+    .then(response => response.json())
+    .then(json => {
+      this.setState({
+        result: json.success,
+        loading: true
+      });
+    }).catch(e => {
+      return e
+  });
+
+    if (this.state.result === "login berhasil" && this.state.loading) {
+      this.props.alert.success(this.state.result);
+      this.setState({
+        authenticatedDosen: true
+      });
+    } else if (this.state.loading) {
+      this.props.alert.error(this.state.result);
+      this.setState({
+        authenticatedDosen: false
+      });
+    }
+
+    return responses;
+
+  };
 
   render() {
-    if (this.state.authenticated) {
+    if (this.state.authenticatedMahasiswa) {
       return (
         <Redirect
-          to={{ pathname: "/mainmenu", state: { kode: this.state.nim } }}
+          to={{ pathname: "/mainmenu", state: { kode: this.state.kd_role } }}
+        />
+      );
+    }
+    else if(this.state.authenticatedDosen){
+      return (
+        <Redirect
+          to={{ pathname: "/Dosen", state: { kode: this.state.kd_role } }}
         />
       );
     }
@@ -136,9 +181,9 @@ class LoginComponent extends React.Component {
                 <InputLabel>Nomor Induk</InputLabel>
                 <Input
                   id="email"
-                  name="nim"
+                  name="kd_role"
                   type="text"
-                  onChange={this.handleChange("nim")}
+                  onChange={this.handleChange("kd_role")}
                   autoFocus
                   required
                 />
@@ -161,10 +206,19 @@ class LoginComponent extends React.Component {
                 fullWidth
                 variant="contained"
                 color="primary"
-                onClick={this.handleClicklogin}
+                onClick={this.handleClickMahasiswa}
                 className={classes.submit}
               >
-                Sign In
+                Masuk sebagai Mahasiswa
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={this.handleClickDosen}
+                className={classes.submit}
+              >
+                Masuk sebagai Dosen
               </Button>
             </form>
           </Paper>

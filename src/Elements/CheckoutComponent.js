@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import dateformat from 'dateformat';
 import { withAlert } from "react-alert";
-import DialogAlert from './DialogAlert';
 
 const styles = theme => ({
   container: {
@@ -30,7 +29,7 @@ class FormDialog extends React.Component {
     super(props);
 
     this.state = {
-      Mahasiswa : {},
+      Actor : {},
       nm_jadwal: "",
       date: "",
       start_time: "",
@@ -44,7 +43,7 @@ class FormDialog extends React.Component {
 
   componentDidMount(){
     this.setState({
-      Mahasiswa : this.props.Mahasiswa,
+      Actor : this.props.Actor,
       kd_ruang : this.props.kd_ruang,
       date : this.props.date,
       start_time : this.props.start_time,
@@ -67,7 +66,7 @@ class FormDialog extends React.Component {
       responses = await fetch("http://localhost:4001/api/addPeminjaman", {
         method: "POST",
         body: JSON.stringify({
-          kd_role: this.state.Mahasiswa[0].NIM,
+          kd_role: this.state.Actor[0].kd_role,
           nm_jadwal: this.state.nm_jadwal,
           tgl: this.state.date,
           jam_pinjam: this.state.start_time,
@@ -109,7 +108,7 @@ class FormDialog extends React.Component {
           'a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM'
       ]
   };
-    console.log(this.state.Mahasiswa)
+    console.log(this.state.Actor)
     const { classes } = this.props;
     console.log(dateformat(this.props.date, "dddd"));
 

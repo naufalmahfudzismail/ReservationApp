@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MainComponent from '../Views/DetailComponent.jsx';
-import MenuApp from '../Elements/MenuApp'; 
+import MenuApp from '../Elements/MenuAppBar'; 
 import ProgressBar  from '../Elements/ProgresBar'
 import CheckoutComponent from '../Elements/CheckoutComponent'
 
@@ -110,14 +110,14 @@ class MainMenu extends Component {
     render() {
 
       const openProf = Boolean(this.state.anchorEl);
-      console.log("Detail =" +this.props.location.state.Mahasiswa)
+      console.log("Detail =" +this.props.location.state.Actor)
       
 
       if(this.state.loading){
         return(
           <div className="App">
             <MenuApp
-              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              Actor  = {this.props.location.state.Actor}
               open = {this.state.openDrawer}
               handleCloseProfil = {this.handleCloseProfil}
               handleMenu = {this.handleProfil}
@@ -138,7 +138,7 @@ class MainMenu extends Component {
         return (
         <div className="App">
             <MenuApp
-              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              Actor  = {this.props.location.state.Actor}
               open = {this.state.openDrawer}
               handleCloseProfil = {this.handleCloseProfil}
               handleMenu = {this.handleProfil}
@@ -151,7 +151,7 @@ class MainMenu extends Component {
             ></MenuApp>
             <MainComponent
              pesanClick = {this.handleClickOpen}
-             Mahasiswa  = {this.props.location.state.Mahasiswa}
+             Actor  = {this.props.location.state.Actor}
               openDrawer = {this.state.openDrawer}
               kd_ruang = {this.props.match.params.ruangan}
               senin = {this.state.senin}
@@ -161,7 +161,7 @@ class MainMenu extends Component {
               jumat ={this.state.jumat}
             ></MainComponent>
             <CheckoutComponent
-              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              Actor  = {this.props.location.state.Actor}
               handleClose = {this.handleClose}
               open = {this.state.open}
               disableInput = {false}

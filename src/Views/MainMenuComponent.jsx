@@ -61,23 +61,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit * 6
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: 240,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-
+  
   submit: {
     justifyContent: "center"
   }
@@ -100,9 +84,7 @@ function Album(props) {
     return (
       <React.Fragment>
         <CssBaseline />
-        <main  className={classNames(classes.content, {
-            [classes.contentShift]: !props.openDrawer,
-          })}>
+       
           {/* Hero unit */}
           <div className={classes.heroUnit}>
             <div className={classes.heroContent}>
@@ -130,7 +112,7 @@ function Album(props) {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Link to={{pathname :"/jadwal", state : {Mahasiswa : props.Mahasiswa}}} style={{ textDecoration: "none" }}>
+                    <Link to={{pathname :"/jadwal", state : {Actor : props.Actor}}} style={{ textDecoration: "none" }}>
                       <Button variant="outlined" color="primary">
                         Lihat Jadwal Semester ini
                       </Button>
@@ -159,7 +141,7 @@ function Album(props) {
                     </CardContent>
                     <CardActions className={classes.submit}>
                       <Link
-                        to={{pathname : "/detail/" + item.kd_ruang, state :{Mahasiswa : props.Mahasiswa}}}
+                        to={{pathname : "/detail/" + item.kd_ruang, state :{Actor : props.Actor}}}
                         style={{ textDecoration: "none" }}
                       >
                         <Button color="primary" variant="contained">
@@ -172,7 +154,6 @@ function Album(props) {
               ))}
             </Grid>
           </div>
-        </main>
         {/* Footer */}
         <footer className={classes.footer}>
           <Typography variant="h6" align="center" gutterBottom>

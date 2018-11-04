@@ -13,7 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import MainAppBar from "../Elements/MenuApp";
+import MainAppBar from "../Elements/MenuAppBar";
 import { Link } from "react-router-dom";
 import CheckoutComponent from '../Elements/CheckoutComponent';
 import ProgressBar from '../Elements/ProgresBar'
@@ -100,9 +100,8 @@ class Result extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            nim : '',
+            kd_role : '',
             ruangan :[],
-            ruangantoRemove : [],
             namaRuangan : '',
             open : false,
             loading : true,
@@ -121,19 +120,11 @@ class Result extends React.Component{
           .then(response => response.json())
           .then(json => {
             this.setState({
-              ruangantoRemove: json.response,
+              ruangan: json.response,
+              loading : false
             });
           });
-
-          fetch("http://localhost:4001/api/allRuangan")
-          .then(response => response.json())
-          .then(json => {
-            this.setState({
-                ruangan : json.response,
-                loading : false
-              });
-          });
-    };
+      };
 
     handleClickOpen = (roomName) => {
       this.setState({ 
@@ -168,7 +159,6 @@ class Result extends React.Component{
     handleDrawerClose = () => {
       this.setState({ openDrawer: false });
     };
-    
 
 
   render(){
@@ -187,16 +177,17 @@ class Result extends React.Component{
       ]
   };
 
-  
+          console.log(this.state.ruangan)
+      
   const {classes, theme} = this.props
   const openProf = Boolean(this.state.anchorEl);
-  this.state.ruangan= this.state.ruangan.filter( ( el ) => !this.state.ruangantoRemove.includes( el ) );
+
 
     if(this.state.loading) {
       return(
       <div className = "App">
            <MainAppBar 
-            Mahasiswa = {this.props.location.state.Mahasiswa}
+            Actor = {this.props.location.state.Actor}
             open = {this.state.openDrawer}
             handleCloseProfil = {this.handleCloseProfil}
             handleMenu = {this.handleProfil}
@@ -214,7 +205,7 @@ class Result extends React.Component{
     if(this.state.ruangan.lenght != 0){
         return( <div className = "App">
             <MainAppBar
-              Mahasiswa = {this.props.location.state.Mahasiswa}
+              Actor = {this.props.location.state.Actor}
               open = {this.state.openDrawer}
               handleCloseProfil = {this.handleCloseProfil}
               handleMenu = {this.handleProfil}
@@ -300,12 +291,12 @@ class Result extends React.Component{
   
        <Provider template={AlertTemplate} {...options}>
         <CheckoutComponent
-          Mahasiswa  = {this.props.location.state.Mahasiswa}
+          Actor  = {this.props.location.state.Actor}
           handleClose = {this.handleClose}
           date = {this.props.match.params.date}
           start_time = {this.props.match.params.start_time}
           end_time = {this.props.match.params.end_time}
-          nim = {this.props.match.params.nim}
+          kd_role = {this.props.match.params.kd_role}
           open = {this.state.open}
           disableInput = {true}
           kd_ruang = {this.state.namaRuangan}></CheckoutComponent> </Provider> </div>)
@@ -358,12 +349,12 @@ class Result extends React.Component{
             }
             <Provider template={AlertTemplate} {...options}>
               <CheckoutComponent
-              Mahasiswa =  {this.props.location.state.Mahasiswa}
+              Actor =  {this.props.location.state.Actor}
               handleClose = {this.handleClose}
               date = {this.props.match.params.date}
               start_time = {this.props.match.params.start_time}
               end_time = {this.props.match.params.end_time}
-              nim = {this.props.match.params.nim}
+              kd_role = {this.props.match.params.kd_role}
               open = {this.state.open}
               kd_ruang = {this.state.namaRuangan}
               disableInput = {true}></CheckoutComponent> </Provider>

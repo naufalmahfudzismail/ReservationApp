@@ -2,16 +2,38 @@ import React, { Component } from 'react';
 import './App.css';
 import MainComponent from '../Views/MainMenuComponent.jsx'
 import FindDialogComponent from '../Views/FindEmptyRoomDialog'
-import MainAppBar from '../Elements/MenuApp'
+import MainAppBar from '../Elements/MenuAppBar'
 import ProgressBar from '../Elements/ProgresBar'
 import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+
+const styles = theme =>({
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: 240,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+})
 
 class MainMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          Mahasiswa : {},
-          nim :'',
+          Actor : {},
+          kd_role :'',
           ruangan: [],
           open : false,
           loading : true,
@@ -30,7 +52,7 @@ class MainMenu extends Component {
           .then(json => {
             this.setState({
               ruangan: json.response,
-              nim : this.props.location.state.kode,
+              kd_role : this.props.location.state.kode,
             });
           });
 
@@ -38,7 +60,7 @@ class MainMenu extends Component {
           .then(response => response.json())
           .then(json => {
             this.setState({
-              Mahasiswa : json.response,
+              Actor : json.response,
               loading : false
             });
           });
@@ -86,9 +108,9 @@ class MainMenu extends Component {
 
     render() {
 
-      
-      console.log(this.state.Mahasiswa)
+      console.log(this.state.Actor)
       const openProf = Boolean(this.state.anchorEl);
+      const { classes } = this.props;
 
       if (this.state.errorInfo) {
         // Error path
@@ -116,7 +138,7 @@ class MainMenu extends Component {
         return (
         <div className="App">
           <MainAppBar 
-                Mahasiswa = {this.state.Mahasiswa}
+                Actor = {this.state.Actor}
                 open = {this.state.openDrawer}
                 handleCloseProfil = {this.handleCloseProfil}
                 handleMenu = {this.handleProfil}
@@ -127,16 +149,19 @@ class MainMenu extends Component {
                 handleChange = {this.handleChange}
                 openProf = {openProf}>
           </MainAppBar>
+          <main  className={classNames(classes.content, {
+            [classes.contentShift]: !this.state.openDrawer,
+          })}>
           <MainComponent 
-                Mahasiswa = {this.state.Mahasiswa}
-                openDrawer = {this.state.openDrawer}
+                Actor = {this.state.Actor}
                 ruangan = {this.state.ruangan}
                 cariClick = {this.handleClickOpenDialog}
                 button_name = "Lihat Jadwal" ></MainComponent>
             <FindDialogComponent
-              Mahasiswa =  {this.state.Mahasiswa}
+              Actor =  {this.state.Actor}
               open = {this.state.open}
               handleClose = {this.handleCloseDialog}></FindDialogComponent>
+              </main>
         </div>
         );
       }
@@ -144,4 +169,9 @@ class MainMenu extends Component {
   }
 }
 
-export default MainMenu;
+MainMenu.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+
+export default withStyles(styles)(MainMenu);

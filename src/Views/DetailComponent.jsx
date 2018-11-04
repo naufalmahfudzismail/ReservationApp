@@ -88,7 +88,7 @@ class Tablayout extends React.Component {
     super(props);
 
     this.state = {
-        namaDosen : ""
+        Dosen : {}
     }
   }
 
@@ -105,14 +105,13 @@ class Tablayout extends React.Component {
   };
 
   getDosen = (kode) => {
-    fetch("http://localhost:4001/api/getNamaDosen/"+kode+"")
+    fetch("http://localhost:4001/api/getDosen/"+kode+"")
       .then(response => response.json())
       .then(json => {
         this.setState({
-           namaDosen : json.response
+            Dosen : json.response
         });
       });
-    return this.state.namaDosen;
   }
 
   render() {

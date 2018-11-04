@@ -103,7 +103,7 @@ class FormDialog extends React.Component {
             <Button name= "button cancel" onClick={this.props.handleClose}  color="primary">  
               Cancel 
             </Button>
-            <Link to={{pathname :'/result/'+this.state.date+'/'+this.state.start_time+'/'+this.state.end_time, state :{Mahasiswa : this.props.Mahasiswa}}} style={{ textDecoration: 'none' }}>
+            <Link to={{pathname :'/result/'+this.state.date+'/'+this.state.start_time+'/'+this.state.end_time, state :{Actor : this.props.Actor}}} style={{ textDecoration: 'none' }}>
             <Button name = "Button Submit" color="primary" variant="contained">
               Submit
             </Button>

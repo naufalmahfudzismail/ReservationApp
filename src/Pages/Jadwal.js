@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import JadwalComponent from '../Views/DetailComponent.jsx';
-import MenuApp from '../Elements/MenuApp'; 
+import MenuApp from '../Elements/MenuAppBar'; 
 import ProgressBar from '../Elements/ProgresBar'
 
 class MainMenu extends Component {
@@ -112,7 +112,7 @@ class MainMenu extends Component {
         return(
           <div className="App">
         <MenuApp
-              Mahasiswa =  {this.props.location.state.Mahasiswa}
+              Actor =  {this.props.location.state.Actor}
               open = {this.state.openDrawer}
               handleCloseProfil = {this.handleCloseProfil}
               handleMenu = {this.handleProfil}
@@ -132,7 +132,7 @@ class MainMenu extends Component {
         return (
         <div className="App">
             <MenuApp
-                Mahasiswa  = {this.props.location.state.Mahasiswa}
+                Actor  = {this.props.location.state.Actor}
                 open = {this.state.openDrawer}
                 handleCloseProfil = {this.handleCloseProfil}
                 handleMenu = {this.handleProfil}
@@ -144,7 +144,7 @@ class MainMenu extends Component {
                 handleChange = {this.handleChange}></MenuApp>
             <JadwalComponent
               pesanClick = {this.handleClickOpen}
-              Mahasiswa  = {this.props.location.state.Mahasiswa}
+              Actor  = {this.props.location.state.Actor}
               openDrawer = {this.state.openDrawer}
               kd_ruang = "Semester Ganjil 2018 - 2019"
               senin = {this.state.senin}

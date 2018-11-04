@@ -73,13 +73,13 @@ class MenuAppBar extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      Mahasiswa : {}
+      Actor : {}
     }
   }
 
   componentDidMount(){
     this.setState({
-      Mahasiswa : this.props.Mahasiswa
+      Actor : this.props.Actor
     })
   }
 
@@ -88,10 +88,10 @@ class MenuAppBar extends React.Component {
     const { classes, theme, open, handleChange, handleCloseProfil, handleDrawerClose, handleMenu, handleDrawerOpen, auth, anchorEl 
     ,openProf} = this.props;
 
-    this.state.Mahasiswa = this.props.Mahasiswa
+    this.state.Actor = this.props.Actor
 
-    console.log(this.state.Mahasiswa)
-    console.log("Nama = "+ this.state.Mahasiswa[0].nm_mhs)
+    console.log(this.state.Actor)
+    console.log("Nama = "+ this.state.Actor[0].nama)
   
     return (
       <div className={classes.root}>
@@ -109,7 +109,7 @@ class MenuAppBar extends React.Component {
               Teknik Informatika dan Komputer
             </Typography>
             <Typography>
-              {this.state.Mahasiswa[0].nm_mhs}
+              {this.state.Actor[0].nama}
             </Typography>
             {auth && (
               <div>
