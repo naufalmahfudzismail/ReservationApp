@@ -27,7 +27,7 @@ class MainMenu extends Component {
 
         //this.props.match.params = menarik nilai variabel path dari page sebelumnya
       
-        fetch("http://localhost:4001/api/getJadwalHari/senin")
+       fetch("http://localhost:4001/api/getJadwalHari/senin")
         .then(response => response.json())
         .then(json => {
           this.setState({

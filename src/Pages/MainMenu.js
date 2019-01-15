@@ -151,7 +151,7 @@ class MainMenu extends Component {
           </MainAppBar>
           <main  className={classNames(classes.content, {
             [classes.contentShift]: !this.state.openDrawer,
-          })}>
+          })}> {'handle content when open / close drawer'}
           <MainComponent 
                 Actor = {this.state.Actor}
                 ruangan = {this.state.ruangan}

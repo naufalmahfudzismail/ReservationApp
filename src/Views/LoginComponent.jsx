@@ -111,7 +111,7 @@ class LoginComponent extends React.Component {
     });
   };
 
-  handleClickDosen = async() => {
+  handleClickDosen = async() => {    // Asynchronus Request
     const settings = {
       method: "POST",
       headers: {
@@ -160,7 +160,7 @@ class LoginComponent extends React.Component {
     else if(this.state.authenticatedDosen){
       return (
         <Redirect
-          to={{ pathname: "/Dosen", state: { kode: this.state.kd_role } }}
+          to={{ pathname: "/dosen", state: { kode: this.state.kd_role } }}
         />
       );
     }

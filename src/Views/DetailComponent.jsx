@@ -186,7 +186,7 @@ class Tablayout extends React.Component {
                         color="textSecondary"
                         gutterBottom
                       >
-                        {item.kd_ruang}
+                        {item.kd_kelas}
                       </Typography>
                       <Typography variant="h5" component="h2">
                         {item.nm_jadwal}
@@ -198,7 +198,7 @@ class Tablayout extends React.Component {
                         {item.jam_awal + " - " + item.jam_akhir}
                       </Typography>
                       <Typography component="p">
-                       {item.nip}
+                       {item.nm_dosen}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -220,7 +220,7 @@ class Tablayout extends React.Component {
                         color="textSecondary"
                         gutterBottom
                       >
-                        {item.kd_ruang}
+                        {item.kd_kelas}
                       </Typography>
                       <Typography variant="h5" component="h2">
                         {item.nm_jadwal}
@@ -231,7 +231,7 @@ class Tablayout extends React.Component {
                       <Typography component="p">
                         {item.jam_awal + " - " + item.jam_akhir}
                         <br />
-                        {item.kd_dosen}
+                        {item.nm_dosen}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -253,7 +253,7 @@ class Tablayout extends React.Component {
                         color="textSecondary"
                         gutterBottom
                       >
-                        {item.kd_ruang}
+                        {item.kd_kelas}
                       </Typography>
                       <Typography variant="h5" component="h2">
                         {item.nm_jadwal}
@@ -264,7 +264,7 @@ class Tablayout extends React.Component {
                       <Typography component="p">
                         {item.jam_awal + " - " + item.jam_akhir}
                         <br />
-                        {item.kd_dosen}
+                        {item.nm_dosen}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -286,7 +286,7 @@ class Tablayout extends React.Component {
                         color="textSecondary"
                         gutterBottom
                       >
-                        {item.kd_ruang}
+                        {item.kd_kelas}
                       </Typography>
                       <Typography variant="h5" component="h2">
                         {item.nm_jadwal}
@@ -297,7 +297,7 @@ class Tablayout extends React.Component {
                       <Typography component="p">
                         {item.jam_awal + " - " + item.jam_akhir}
                         <br />
-                        {item.kd_dosen}
+                        {item.nm_dosen}
                       </Typography>
                     </CardContent>
                     <CardActions>
@@ -319,7 +319,7 @@ class Tablayout extends React.Component {
                         color="textSecondary"
                         gutterBottom
                       >
-                        {item.kd_ruang}
+                        {item.kd_kelas}
                       </Typography>
                       <Typography variant="h5" component="h2">
                         {item.nm_jadwal}
@@ -330,7 +330,7 @@ class Tablayout extends React.Component {
                       <Typography component="p">
                         {item.jam_awal + " - " + item.jam_akhir}
                         <br />
-                        {item.kd_dosen}
+                        {item.nm_dosen}
                       </Typography>
                     </CardContent>
                     <CardActions>
